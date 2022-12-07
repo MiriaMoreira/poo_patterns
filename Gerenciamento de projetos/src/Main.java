@@ -506,20 +506,31 @@ public class Main {
                         int i = 0;
                         System.out.println("Selecione o projeto que gostaria de editar:");
                         for(Project project : user.projects){
-                            System.out.println(i + " - " + project);
+                            System.out.println(i + " - " + project.title);
                             i++;
                         }
                         int valor = input.nextInt();
+                        
+                        while(!correctInput){
+                            try{
+                                valor = Integer.parseInt(input.next());
+                                correctInput = true;
+                            } catch (NumberFormatException e){
+                                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
+                            }
+                        }
+                        
                         open_project(user.projects.get(valor));
+
                     }
                             
                     break;
     
                 case 4:
                     int i = 0;
-                    System.out.println("Selecione o projeto que gostaria de editar:");
+                    System.out.println("Selecione o projeto que gostaria de consultar:");
                     for(Project project : projects){
-                        System.out.println(i + " - " + project);
+                        System.out.println(i + " - " + project.title);
                         i++;
                     }
                     int valor = input.nextInt();
