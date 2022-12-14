@@ -25,23 +25,20 @@ public class Main {
             System.out.println("1 - Fazer Login");
             System.out.println("2 - Criar Conta");
             System.out.println("================================================\n");
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd");
+            Date date = new Date();
+            String f_date = sdf.format(date);
+            int day = Integer.parseInt(f_date);
 
-            n = 0;
-            boolean correctInput = false;
-
-            while(!correctInput){
-                try{
-                    n = Integer.parseInt(input.next());
-                    correctInput = true;
-                } catch (NumberFormatException e){
-                    System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
+            if(day == 8){
+                for(Project project: projects){
+                    project.Payment();
                 }
             }
+
+            n = read_int();
             
-            correctInput = false;
-            input.nextLine();
-
-
             String email, name, password;
 
             switch (n){
@@ -93,17 +90,7 @@ public class Main {
 
                     while(!done){
 
-                        type = 0;
-                        correctInput = false;
-    
-                        while(!correctInput){
-                            try{
-                                type = Integer.parseInt(input.next());
-                                correctInput = true;
-                            } catch (NumberFormatException e){
-                                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-                            }
-                        }
+                        type = read_int();
 
                         switch(type){
 
@@ -181,20 +168,7 @@ public class Main {
 
 
         Scanner input = new Scanner(System.in);
-        boolean correctInput = false;
-        int option = 0;
-
-        while(!correctInput){
-            try{
-                option = Integer.parseInt(input.next());
-                correctInput = true;
-            } catch (NumberFormatException e){
-                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-            }
-        }
-        
-        correctInput = false;
-        input.nextLine();
+        int option = read_int();
 
         switch(option){
             case 1:
@@ -293,10 +267,8 @@ public class Main {
                 user.projects.add(project);
             	System.out.println("\nDigite o valor da bolsa para " + e_name + ":");
                 
-                double value = input.nextInt();
+                double value = read_double();
 
-                input.nextLine();
-                
                 System.out.println("\nPeriodo de vigencia da bolsa:");
                 
                 Period period = setPeriod();
@@ -306,6 +278,7 @@ public class Main {
                 user.setBolsa(bolsa);
                 
             }
+            System.out.println("Digite o nome do profissional ou \'fim\' caso nao tenha mais participantes");
             e_name = input.nextLine();
         }
         
@@ -314,10 +287,10 @@ public class Main {
         ArrayList<Activities> activities = new ArrayList<Activities>();
         
         while(!done) {
-        	System.out.println("0 - concluir criacao do projeto");
+        	System.out.println("\n0 - concluir criacao do projeto");
         	System.out.println("1 - Adicionar Atividade");
         	
-        	int value = input.nextInt();
+        	int value = read_int();
         	
         	if(value == 1)
         		activities.add(create_activity(activities));
@@ -334,7 +307,7 @@ public class Main {
         
     }
     
-        
+
     
     public static Activities create_activity(ArrayList<Activities> activities) {
     	
@@ -411,19 +384,8 @@ public class Main {
             System.out.println("3 - Alterar senha");
 
             Scanner input = new Scanner(System.in);
-            boolean correctInput = false;
-            int option = 0;
+            int option = read_int();
 
-            while(!correctInput){
-                try{
-                    option = Integer.parseInt(input.next());
-                    correctInput = true;
-                } catch (NumberFormatException e){
-                    System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-                }
-            }
-            
-            correctInput = false;
             input.nextLine();
 
             switch(option){
@@ -458,6 +420,41 @@ public class Main {
             }
     }
 
+    public static int read_int(){
+        Scanner input = new Scanner(System.in);
+        boolean correctInput = false;
+        int number = 0;
+
+        while(!correctInput){
+            try{
+                number = Integer.parseInt(input.next());
+                correctInput = true;
+            } catch (NumberFormatException e){
+                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
+            }
+        }
+
+        return number;
+    }
+
+    public static double read_double(){
+        Scanner input = new Scanner(System.in);
+        boolean correctInput = false;
+        double number = 0;
+
+        while(!correctInput){
+            try{
+                number = Double.parseDouble(input.next());
+                correctInput = true;
+            } catch (NumberFormatException e){
+                System.out.println("Entrada Invalida, digite um numero inteiro, usando ponto para representar as casas decimais " 
+                + e.getMessage());
+            }
+        }
+
+        return number;
+    }
+
 
     public static void login(User user, ArrayList<Project> projects, ArrayList<User> users){
        
@@ -473,19 +470,12 @@ public class Main {
             System.out.println("1 - Alterar Dados do usuario");
             System.out.println("2 - Criar Projeto");
             System.out.println("3 - Editar Projeto");
-            System.out.println("4 - Consultar Projetos");
+            System.out.println("4 - Consultar / Gerar Relatorio / Fazer intercambio entra projetos");
             System.out.println("================================================\n");
             
             boolean correctInput = false;
 
-            while(!correctInput){
-                try{
-                    value = Integer.parseInt(input.next());
-                    correctInput = true;
-                } catch (NumberFormatException e){
-                    System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-                }
-            }
+            value = read_int();
 
             switch(value){
 
@@ -506,19 +496,10 @@ public class Main {
                         int i = 0;
                         System.out.println("Selecione o projeto que gostaria de editar:");
                         for(Project project : user.projects){
-                            System.out.println(i + " - " + project.title);
+                            System.out.println(i+1 + " - " + project.title);
                             i++;
                         }
-                        int valor = input.nextInt();
-                        
-                        while(!correctInput){
-                            try{
-                                valor = Integer.parseInt(input.next());
-                                correctInput = true;
-                            } catch (NumberFormatException e){
-                                System.out.println("Entrada Invalida, digite um numero inteiro " + e.getMessage());
-                            }
-                        }
+                        int valor = (read_int() - 1);
                         
                         open_project(user.projects.get(valor));
 
@@ -528,13 +509,25 @@ public class Main {
     
                 case 4:
                     int i = 0;
-                    System.out.println("Selecione o projeto que gostaria de consultar:");
+                    System.out.println("Selecione o projeto:");
                     for(Project project : projects){
-                        System.out.println(i + " - " + project.title);
+                        System.out.println(i+1 + " - " + project.title);
                         i++;
                     }
-                    int valor = input.nextInt();
-                    System.out.println(projects.get(valor).toString());
+                    int valor = (read_int() - 1);
+                    ArrayList<String> command = new ArrayList<>();
+                    command.add("consult");
+                    command.add("report");
+                    command.add("exchange");
+
+                    System.out.println("O que gostaria de executar: \n"
+                                        + "1 - Consultar projeto\n"
+                                        + "2 - Gerar Relatorio\n"
+                                        + "3 - Fazer intercambio entre projetos\n");
+                    
+                    int a = (read_int()-1);
+                    command.get(a).execute(projects.get(valor));
+
                     break;
 
                 default:
