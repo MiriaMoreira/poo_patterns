@@ -470,7 +470,9 @@ public class Main {
             System.out.println("1 - Alterar Dados do usuario");
             System.out.println("2 - Criar Projeto");
             System.out.println("3 - Editar Projeto");
-            System.out.println("4 - Consultar / Gerar Relatorio / Fazer intercambio entra projetos");
+            System.out.println("4 - Consultar Projetos");
+            System.out.println("5 - Gerar Relatorio");
+            System.out.println("6 - Fazer intecâmbio entre projetos");
             System.out.println("================================================\n");
             
             boolean correctInput = false;
@@ -509,27 +511,39 @@ public class Main {
     
                 case 4:
                     int i = 0;
-                    System.out.println("Selecione o projeto:");
+                    System.out.println("Selecione o projeto que gostaria de consultar:");
                     for(Project project : projects){
                         System.out.println(i+1 + " - " + project.title);
                         i++;
                     }
                     int valor = (read_int() - 1);
-                    ArrayList<String> command = new ArrayList<>();
-                    command.add("consult");
-                    command.add("report");
-                    command.add("exchange");
-
-                    System.out.println("O que gostaria de executar: \n"
-                                        + "1 - Consultar projeto\n"
-                                        + "2 - Gerar Relatorio\n"
-                                        + "3 - Fazer intercambio entre projetos\n");
-                    
-                    int a = (read_int()-1);
-                    command.get(a).execute(projects.get(valor));
-
+                    System.out.println(projects.get(valor).toString());
                     break;
 
+                case 5:
+                    int a = 0;
+                    System.out.println("Selecione o projeto que gostaria de gerar o relatorio:");
+                    for(Project project : projects){
+                        System.out.println(a+1 + " - " + project.title);
+                        a++;
+                    }
+                    int v = (read_int() - 1);
+                    System.out.println("================================================\n");
+                    System.out.println("Relatorio do projeto\n");
+                    System.out.println("================================================\n");
+                    System.out.println(projects.get(v).report() + "\n");
+                    break;
+
+                case 6:
+                    int j = 0;
+                    System.out.println("Selecione o projeto que gostaria de fazer intercambio:");
+                    for(Project project : projects){
+                        System.out.println(j+1 + " - " + project.title);
+                        j++;
+                    }
+                    int opcao = (read_int() - 1);
+                    user.projects.add(projects.get(opcao));
+                    break;
                 default:
                     break;
 
